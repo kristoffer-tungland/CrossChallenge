@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CrossChallenge.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrossChallenge.Api
 {
@@ -31,6 +33,13 @@ namespace CrossChallenge.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrossChallenge.Api", Version = "v1" });
             });
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                );
+
+            services.AddScoped<IAthleteRepository, AthleteRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
