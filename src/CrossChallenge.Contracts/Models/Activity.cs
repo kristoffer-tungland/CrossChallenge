@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using CrossChallenge.Contracts.Enums;
+using Newtonsoft.Json.Converters;
 
 namespace CrossChallenge.Contracts.Models
 {
@@ -9,6 +11,7 @@ namespace CrossChallenge.Contracts.Models
 
         public string Name { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ActivityType ActivityType { get; set; }
 
         public double Value { get; set; }

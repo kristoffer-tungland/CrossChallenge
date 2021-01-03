@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CrossChallenge.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 
 namespace CrossChallenge.Api
 {
@@ -33,6 +34,14 @@ namespace CrossChallenge.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CrossChallenge.Api", Version = "v1" });
             });
+
+            services.AddMvc().AddNewtonsoftJson(opts =>
+            {
+                opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+            });
+
+            // https://stackoverflow.com/questions/36452468/swagger-ui-web-api-documentation-present-enums-as-strings
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
